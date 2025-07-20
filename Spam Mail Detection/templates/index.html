@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Mail Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: #333;
+            padding: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: #222;
+            background-color: #eee;
+            resize: vertical;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .emoji {
+            font-size: 50px;
+            margin-top: 20px;
+        }
+        .circle {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-top: 20px;
+            font-size: 24px;
+            line-height: 40px;
+        }
+        .green {
+            background-color: #28a745; 
+            color: #fff;
+        }
+        .red {
+            background-color: #dc3545;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spam Mail Detection</h1>
+        <form id="mailForm" method="POST">
+            <textarea id="mailText" class="input-box" rows="4" placeholder="Enter your email text here..."></textarea>
+            <br>
+            <button type="submit" class="button">Check Spam</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('mailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const mailText = document.getElementById('mailText').value;
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: mailText })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = ''; 
+                if (data.result === 'ham') {
+                    resultDiv.innerHTML = '<div class="circle green">&#x2714;</div>'; 
+                } else {
+                    resultDiv.innerHTML = '<div class="circle red">&#x2716;</div>'; 
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
