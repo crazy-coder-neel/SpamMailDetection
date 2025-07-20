@@ -18,7 +18,7 @@ A simple yet effective spam email classifier built using **TF-IDF** vectorizatio
 
 - **Vectorization**: TF-IDF (Term Frequency–Inverse Document Frequency)
 - **Classifier**: Logistic Regression
-- **Dataset**: Trained on a standard labeled spam email dataset (e.g., [SMS Spam Collection](https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset) or similar)
+- **Dataset**: Trained on a labeled spam email dataset.
 
 ## 🖥️ How It Works
 
